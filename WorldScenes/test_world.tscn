@@ -1,0 +1,54 @@
+[gd_scene load_steps=7 format=3 uid="uid://mnogx71ao834"]
+
+[ext_resource type="Script" path="res://WorldScenes/test_world.cs" id="1_axerf"]
+[ext_resource type="PackedScene" uid="uid://7wpnuftoyjcu" path="res://Entities/Player.tscn" id="2_jldn7"]
+[ext_resource type="Script" path="res://WorldScenes/Mouse.cs" id="3_0app8"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_7kxb1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dtd5y"]
+size = Vector2(20000, 20)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_2b8tl"]
+
+[node name="TestWorld" type="Node"]
+script = ExtResource("1_axerf")
+_player = ExtResource("2_jldn7")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_layer = 7
+collision_mask = 7
+physics_material_override = SubResource("PhysicsMaterial_7kxb1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("RectangleShape2D_dtd5y")
+
+[node name="Polygon2D" type="Polygon2D" parent="StaticBody2D"]
+scale = Vector2(100, 1)
+polygon = PackedVector2Array(-202, -10, -202, 10, 293, 9, 292, -10)
+
+[node name="PlayerSpawner" type="Marker2D" parent="."]
+position = Vector2(0, -230)
+
+[node name="RigidBody2D" type="RigidBody2D" parent="."]
+position = Vector2(121, -44)
+collision_layer = 3
+collision_mask = 3
+physics_material_override = SubResource("PhysicsMaterial_2b8tl")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="RigidBody2D"]
+polygon = PackedVector2Array(-7, -9, 9, -14, 18, -11, 19, -3, 17, 7, 3, 12, -9, 14, -19, 8, -16, -3)
+
+[node name="Polygon2D" type="Polygon2D" parent="RigidBody2D/CollisionPolygon2D"]
+color = Color(0.470588, 0.470588, 0.470588, 1)
+polygon = PackedVector2Array(-7, -9, 9, -14, 18, -11, 19, -3, 17, 7, 3, 12, -9, 14, -19, 8, -16, -3)
+
+[node name="Mouse" type="Marker2D" parent="."]
+position = Vector2(9, -116)
+script = ExtResource("3_0app8")
+
+[node name="RayCast2D" type="RayCast2D" parent="Mouse"]
+target_position = Vector2(0, 3)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(0, -247)

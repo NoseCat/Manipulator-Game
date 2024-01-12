@@ -1,0 +1,236 @@
+[gd_scene load_steps=15 format=3 uid="uid://7wpnuftoyjcu"]
+
+[ext_resource type="Script" path="res://Entities/Player.cs" id="1_f8tb2"]
+[ext_resource type="Texture2D" uid="uid://b0pe6ag2dgvb7" path="res://CharacterSprites/NoseCat.png" id="2_v5j5s"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_g6wj0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5dd05"]
+size = Vector2(128, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8m12b"]
+size = Vector2(124, 16)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kiby7"]
+radius = 16.0
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_1tjis"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_23c60"]
+size = Vector2(64, 16)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_rvcg5"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qtkbe"]
+radius = 20.0
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_0hmuj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_onds0"]
+size = Vector2(64, 16)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_qul4f"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ob1sb"]
+radius = 20.0
+
+[node name="Player" type="Node2D"]
+script = ExtResource("1_f8tb2")
+Reach = 232.0
+
+[node name="PlayerBase" type="RigidBody2D" parent="."]
+input_pickable = true
+physics_material_override = SubResource("PhysicsMaterial_g6wj0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerBase"]
+shape = SubResource("RectangleShape2D_5dd05")
+
+[node name="Polygon2D" type="Polygon2D" parent="PlayerBase"]
+scale = Vector2(2, 2)
+polygon = PackedVector2Array(-32, -8, 32, -8, 32, 8, -32, 8)
+
+[node name="Camera2D" type="Camera2D" parent="PlayerBase"]
+
+[node name="Label" type="Label" parent="PlayerBase"]
+offset_left = -63.0
+offset_top = -69.0
+offset_right = -23.0
+offset_bottom = -46.0
+
+[node name="MarkerCenter" type="Marker2D" parent="PlayerBase"]
+visible = false
+
+[node name="MarkerMid" type="Marker2D" parent="PlayerBase/MarkerCenter"]
+position = Vector2(116, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="PlayerBase/MarkerCenter/MarkerMid"]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_v5j5s")
+
+[node name="MarkerPointer" type="Marker2D" parent="PlayerBase/MarkerCenter"]
+visible = false
+position = Vector2(232, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="PlayerBase/MarkerCenter/MarkerPointer"]
+texture = ExtResource("2_v5j5s")
+
+[node name="MarkerRotationCenter" type="Marker2D" parent="PlayerBase/MarkerCenter"]
+
+[node name="Sprite2D" type="Sprite2D" parent="PlayerBase/MarkerCenter/MarkerRotationCenter"]
+scale = Vector2(1, 0.25)
+texture = ExtResource("2_v5j5s")
+
+[node name="InterpolMarkerRotationCenter" type="Marker2D" parent="PlayerBase"]
+visible = false
+
+[node name="Sprite2D" type="Sprite2D" parent="PlayerBase/InterpolMarkerRotationCenter"]
+modulate = Color(0.607843, 0.705882, 1, 1)
+scale = Vector2(1, 0.25)
+texture = ExtResource("2_v5j5s")
+
+[node name="Elbow" type="Marker2D" parent="PlayerBase/InterpolMarkerRotationCenter"]
+position = Vector2(112, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="PlayerBase/InterpolMarkerRotationCenter/Elbow"]
+modulate = Color(0.607843, 0.705882, 1, 1)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_v5j5s")
+
+[node name="InterpolMarkerPointer" type="Marker2D" parent="PlayerBase"]
+visible = false
+position = Vector2(233, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="PlayerBase/InterpolMarkerPointer"]
+modulate = Color(0.607843, 0.705882, 1, 1)
+texture = ExtResource("2_v5j5s")
+
+[node name="ArmBase" type="Area2D" parent="PlayerBase"]
+z_index = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerBase/ArmBase"]
+position = Vector2(54, 0)
+shape = SubResource("RectangleShape2D_8m12b")
+
+[node name="Polygon2D" type="Polygon2D" parent="PlayerBase/ArmBase/CollisionShape2D"]
+color = Color(0.454902, 1, 1, 0.592157)
+polygon = PackedVector2Array(-62, -8, -62, 8, 62, 8, 62, -8)
+
+[node name="Arm" type="Area2D" parent="PlayerBase/ArmBase"]
+z_index = 1
+position = Vector2(108, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerBase/ArmBase/Arm"]
+position = Vector2(54, 0)
+shape = SubResource("RectangleShape2D_8m12b")
+
+[node name="Polygon2D" type="Polygon2D" parent="PlayerBase/ArmBase/Arm/CollisionShape2D"]
+color = Color(0.568627, 1, 0.85098, 0.592157)
+polygon = PackedVector2Array(-62, -8, -62, 8, 62, 8, 62, -8)
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="PlayerBase/ArmBase/Arm"]
+position = Vector2(124, 0)
+collision_layer = 2
+collision_mask = 2
+motion_mode = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerBase/ArmBase/Arm/CharacterBody2D"]
+shape = SubResource("CircleShape2D_kiby7")
+
+[node name="Polygon2D" type="Polygon2D" parent="PlayerBase/ArmBase/Arm/CharacterBody2D/CollisionShape2D"]
+color = Color(0.596078, 0.596078, 0.596078, 1)
+polygon = PackedVector2Array(-16, 0, 0, -16, 10, -12, -14, 0, 10, 12, -3, 16)
+
+[node name="Pin" type="PinJoint2D" parent="PlayerBase/ArmBase/Arm/CharacterBody2D"]
+node_a = NodePath("..")
+
+[node name="LWheelHolder" type="RigidBody2D" parent="."]
+position = Vector2(-40, 30)
+rotation = -0.785398
+physics_material_override = SubResource("PhysicsMaterial_1tjis")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LWheelHolder"]
+shape = SubResource("RectangleShape2D_23c60")
+
+[node name="Polygon2D" type="Polygon2D" parent="LWheelHolder"]
+color = Color(0.431373, 0.431373, 0.431373, 1)
+polygon = PackedVector2Array(31.8198, -7.77818, 31.8198, 7.77817, -31.8198, 7.77818, -31.8198, -7.77818)
+
+[node name="LSpring" type="DampedSpringJoint2D" parent="."]
+z_index = 1
+position = Vector2(-60, 16)
+node_a = NodePath("../PlayerBase")
+node_b = NodePath("../LWheel")
+length = 34.0
+rest_length = 50.0
+stiffness = 60.0
+
+[node name="LPinHolder" type="PinJoint2D" parent="."]
+z_index = 1
+position = Vector2(-23, 13)
+node_a = NodePath("../PlayerBase")
+node_b = NodePath("../LWheelHolder")
+angular_limit_enabled = true
+angular_limit_upper = 0.174533
+
+[node name="LPinWheel" type="PinJoint2D" parent="."]
+z_index = 1
+position = Vector2(-60, 50)
+node_a = NodePath("../LWheelHolder")
+node_b = NodePath("../LWheel")
+
+[node name="LWheel" type="RigidBody2D" parent="."]
+position = Vector2(-60, 50)
+physics_material_override = SubResource("PhysicsMaterial_rvcg5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LWheel"]
+shape = SubResource("CircleShape2D_qtkbe")
+
+[node name="Polygon2D" type="Polygon2D" parent="LWheel"]
+scale = Vector2(2, 2)
+polygon = PackedVector2Array(5, -9, -6, -8, -10, -1, -6, 8, 5, 9, 10, 0)
+
+[node name="RWheelHolder" type="RigidBody2D" parent="."]
+position = Vector2(40, 30)
+rotation = 0.785398
+physics_material_override = SubResource("PhysicsMaterial_0hmuj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RWheelHolder"]
+shape = SubResource("RectangleShape2D_onds0")
+
+[node name="Polygon2D" type="Polygon2D" parent="RWheelHolder"]
+color = Color(0.431373, 0.431373, 0.431373, 1)
+polygon = PackedVector2Array(31.8198, -7.77818, 31.8198, 7.77817, -31.8198, 7.77818, -31.8198, -7.77818)
+
+[node name="RSpring" type="DampedSpringJoint2D" parent="."]
+z_index = 1
+position = Vector2(60, 16)
+node_a = NodePath("../PlayerBase")
+node_b = NodePath("../RWheel")
+length = 34.0
+rest_length = 50.0
+stiffness = 60.0
+
+[node name="RPinHolder" type="PinJoint2D" parent="."]
+z_index = 1
+position = Vector2(23, 13)
+node_a = NodePath("../PlayerBase")
+node_b = NodePath("../RWheelHolder")
+angular_limit_enabled = true
+angular_limit_lower = -0.174533
+
+[node name="RPinWheel" type="PinJoint2D" parent="."]
+z_index = 1
+position = Vector2(60, 50)
+node_a = NodePath("../RWheelHolder")
+node_b = NodePath("../RWheel")
+
+[node name="RWheel" type="RigidBody2D" parent="."]
+position = Vector2(60, 50)
+physics_material_override = SubResource("PhysicsMaterial_qul4f")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RWheel"]
+shape = SubResource("CircleShape2D_ob1sb")
+
+[node name="Polygon2D" type="Polygon2D" parent="RWheel"]
+scale = Vector2(2, 2)
+polygon = PackedVector2Array(5, -9, -6, -8, -10, -1, -6, 8, 5, 9, 10, 0)
